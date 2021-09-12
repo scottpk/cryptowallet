@@ -11,12 +11,8 @@ namespace cryptowallet.Controllers
     [Route("[controller]")]
     public class WalletController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<WalletController> _logger;
+        private Dictionary<string, IWallet> wallets = new Dictionary<string, IWallet>();
 
         public WalletController(ILogger<WalletController> logger)
         {
@@ -26,7 +22,14 @@ namespace cryptowallet.Controllers
         [HttpGet]
         public IEnumerable<IWallet> GetWallets()
         {
-            throw new NotImplementedException();
+            return wallets.Select(_ => _.Value);
+        }
+
+        [HttpPut]
+        public void AddOrUpdateWallet(IWallet wallet)
+        {
+            var id = Convert.ToBase64String(wallet.IdHash);
+            wallets[id] = wallet;
         }
     }
 }

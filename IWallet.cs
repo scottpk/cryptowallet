@@ -1,6 +1,8 @@
 namespace cryptowallet {
     public interface IWallet{
-        public string Address {get;set;}
-        public QRCoder.QRCode QRCode{ get; }
+        byte[] IdHash {get;}
+        string Name {get;}
+        string Address {get;}
+        QRCoder.QRCode QRCode{ get; }
     }
 }
